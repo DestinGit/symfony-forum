@@ -3,7 +3,7 @@
 {% block body %}
 
     <h1>Liste des thèmes</h1>
-{{ dump(list) }}
+
     <table class="table">
         <tbody>
         {% for theme in themeList %}
@@ -13,7 +13,7 @@
                         {{ theme.name }}
                     </a>
                 </td>
-                <td>{{ theme.posts | length }} posts</td>
+                <td>{{ theme.numberofPosts | length }} posts</td>
             </tr>
         {% endfor %}
         </tbody>

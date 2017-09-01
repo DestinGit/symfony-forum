@@ -18,11 +18,9 @@ class DefaultController extends Controller
         $repository = $this->getDoctrine()
             ->getRepository("AppBundle:Theme");
 
-        $themeList = $repository->findAll();
-// Pour les tests du QueryBuilder
-$list = $repository->getAllThemes()->getArrayResult();
+        $list = $repository->getAllThemes()->getArrayResult();
 
-        return $this->render('default/index.html.twig', ["themeList" => $themeList, 'list'=>$list]);
+        return $this->render('default/index.html.twig', ["themeList" => $list]);
     }
 
     /**
