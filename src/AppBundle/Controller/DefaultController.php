@@ -19,8 +19,10 @@ class DefaultController extends Controller
             ->getRepository("AppBundle:Theme");
 
         $themeList = $repository->findAll();
+// Pour les tests du QueryBuilder
+$list = $repository->getAllThemes()->getArrayResult();
 
-        return $this->render('default/index.html.twig', ["themeList" => $themeList]);
+        return $this->render('default/index.html.twig', ["themeList" => $themeList, 'list'=>$list]);
     }
 
     /**
@@ -35,6 +37,9 @@ class DefaultController extends Controller
 
         $theme = $repository->find($id);
 
+        // Pour les tests
+        $allThemes = $repository->getAllThemes()->getArrayResult();
+
         if(! $theme){
             throw new NotFoundHttpException("Thème introuvable");
         }
@@ -42,7 +47,8 @@ class DefaultController extends Controller
 
         return $this->render('default/theme.html.twig', [
             "theme" => $theme,
-            "postList" => $theme->getPosts()
+            "postList" => $theme->getPosts(),
+            "all" =>$allThemes // Pour les tests
         ]);
     }
 }

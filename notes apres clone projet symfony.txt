@@ -10,3 +10,10 @@ si pb, réinstaller bower
 (npm install-g bower)
 (bower init)
 (bower install --save bootstrap)
+
+php bin/console doctrine:schema:create
+php bin/console doctrine:fixtures:load
+
+
+GENERATEUR DE DONNEES : FAKER
+voir lien : https://github.com/fzaninotto/Faker

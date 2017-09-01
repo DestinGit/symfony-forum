@@ -10,4 +10,21 @@ namespace AppBundle\Repository;
  */
 class ThemeRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getAllThemes() {
+        // Recupérer l'instance de QueryBuilder. 't' est l'alias THEME car on est dans ThemeRepository
+        $qb = $this->createQueryBuilder('t');
+
+//        $qb->select(['t.id', 'UCASE(t.name)']);
+//        ou
+//        $qb->select("t.id, UPPER(t.name) as name");
+        $qb->select("t.name, count(p) as numerofPosts")
+            // 1ere argument est la variable qui stocke l'association
+            // le 2e argument représente l'alias de la 2e entité. En l'occurence c'est Post
+        ->innerJoin("t.posts", "p")
+        ->groupBy("t.id");
+
+        dump($qb->getDQL());
+
+        return $qb->getQuery();
+    }
 }
