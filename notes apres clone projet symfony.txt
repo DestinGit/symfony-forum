@@ -1,0 +1,4 @@
+quand on clone un projet symfony depuis GIT
+Faire :
+- composer install
+- bower install
