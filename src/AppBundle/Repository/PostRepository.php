@@ -18,7 +18,7 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
 
         $qb->select('YEAR(p.createdAt) as yearPublished,
                         COUNT(p.id) as numberOfPosts ')
-            ->groupBy('YEAR(p.createdAt)');
+            ->groupBy('yearPublished');
 
         return $qb->getQuery()->getArrayResult();
     }
