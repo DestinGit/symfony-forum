@@ -7,10 +7,11 @@
             <a href="{{ path('homepage') }}">Liste des thèmes</a>
         </li>
     </ol>
-     {#Pour les tests#}
-    {{ dump(all) }}
 
-    <h1>{{ theme.name }}</h1>
+    {% if theme is defined %}
+        <h1>{{ theme.name }}</h1>
+    {% elseif title is defined %}
+    {% endif %}
 
     <table class="table">
         <tbody>
