@@ -1,4 +1,12 @@
-quand on clone un projet symfony depuis GIT
+GULP le remplacant de grunt
+Voir lien: https://www.alsacreations.com/tuto/lire/1686-introduction-a-gulp.html
+(A étudier)
+
+QUAND ON CLONE UN PROJET SYMFONY DEPUIS GIT
 Faire :
 - composer install
-- bower install
+- bower install 
+si pb, réinstaller bower
+(npm install-g bower)
+(bower init)
+(bower install --save bootstrap)
