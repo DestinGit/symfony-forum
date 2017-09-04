@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\Post;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Theme
@@ -25,7 +26,9 @@ class Theme
 
     /**
      * @var string
-     *
+     * @Assert\Length(min="3", max="20",
+     *      minMessage="Minimum {{limit}} caractrères",
+     *     maxMessage="Maximum {{limit}} caractères")
      * @ORM\Column(name="name", type="string", length=50, unique=true)
      */
     private $name;
