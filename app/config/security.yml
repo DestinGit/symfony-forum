@@ -31,6 +31,9 @@ security:
               login_path: admin_login # Route pour afficher le formulaire de connexion
               check_path: admin_login_check # Route pour exécution l'action sur le formulaire
               default_target_path: admin_home # Route cible si action est ok
+            logout:
+              path: admin_logout # Cette route est gérée par Symfony, il suffit juste de l'a déclarer dans routing
+              target: homepage # C’est la route en cas de succes
 
         main:
             anonymous: ~

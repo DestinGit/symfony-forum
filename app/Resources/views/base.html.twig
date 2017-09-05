@@ -9,6 +9,9 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body class="container-fluid">
+        {% block nav %}
+            {% include "_navbar.html.twig" %}
+        {% endblock %}
 
         <header class="col-md-10 col-md-offset-1 well">
             <h1>Mon forum</h1>

@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 class AdminController extends Controller
 {
     /**
-     * @Route("/", name="damin_home")
+     * @Route("/", name="admin_home")
      * @return Response
      */
     public function indexAction() {

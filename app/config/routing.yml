@@ -4,3 +4,6 @@ app:
 
 admin_login_check: # Nom de la route pour la vérification
   path: /admin/login-check # Chemin de la route pour la vérification
+
+admin_logout:
+  path: admin/logout
