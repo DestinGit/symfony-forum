@@ -2,7 +2,9 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Author;
 use AppBundle\Entity\Post;
+use AppBundle\Form\AuthorType;
 use AppBundle\Form\PostType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -86,6 +88,35 @@ class DefaultController extends Controller
         return $this->render('default/theme.html.twig', [
             'title' => "liste des posts par année ({$year})",
             'postList' => $postrepository->getPostsByYear($year)
+        ]);
+    }
+
+    /**
+     * @Route("/inscription", name="author_registration")
+     * @param Request $request
+     * @return Response
+     */
+    public function registrationAction(Request $request) {
+        $author = new Author();
+        $form = $this->createForm(AuthorType::class, $author);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            // Encodage du mot de passe
+            $encoderFactory = $this->get('security.encoder_factory');
+            $encoder = $encoderFactory->getEncoder($author);
+            $author->setPassword($encoder->encodePassword($author->getPlainPassword(), null));
+            $author->setPlainPassword(null);
+
+            $em->persist($author);
+            $em->flush();
+
+            return $this->redirectToRoute('homepage');
+        }
+        return $this->render('default/author-registration.html.twig', [
+            'registrationForm' => $form->createView()
         ]);
     }
 }
