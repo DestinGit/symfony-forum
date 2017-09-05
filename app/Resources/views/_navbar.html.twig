@@ -39,14 +39,27 @@
                 {% if is_granted('ROLE_ADMIN') %}
                     <li class="navbar-text">Hello {{ app.user.userName }}</li>
                     <li>
-                        <a href="{{ path('admin_logout') }}">Deconnexion</a>
+                        <a href="{{ path('admin_logout') }}">Deconnexion admin</a>
                     </li>
                 {% else %}
                     <li>
-                        <a href="{{ path('admin_login') }}">Connexion</a>
+                        <a href="{{ path('admin_login') }}">Connexion admin</a>
                     </li>
                 {% endif %}
             </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if is_granted('ROLE_AUTHOR') %}
+                    <li class="navbar-text">Hello {{ app.user.userName }}</li>
+                    <li>
+                        <a href="{{ path('author_logout') }}">Deconnexion auteur</a>
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="{{ path('author_login') }}">Connexion auteur</a>
+                    </li>
+                {% endif %}
+            </ul>
+
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
