@@ -5,13 +5,33 @@ security:
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
         in_memory:
-            memory: ~
+            memory:
+              users:
+                admin:
+                  password: 123
+                  roles: ROLE_ADMIN
+
+    encoders:
+        Symfony\Component\Security\Core\User\User: plaintext
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        # Je protège la route /admin/login
+        admin_login_firewall:
+            pattern: ^/admin/login$
+            anonymous: ~
+        # Je protège toutes les routes commencant par /admin
+        admin_firewall:
+            pattern: ^/admin
+            provider: in_memory # La clé fournisseur de donnée
+            form_login:
+              login_path: admin_login # Route pour afficher le formulaire de connexion
+              check_path: admin_login_check # Route pour exécution l'action sur le formulaire
+              default_target_path: admin_home # Route cible si action est ok
+
 
         main:
             anonymous: ~

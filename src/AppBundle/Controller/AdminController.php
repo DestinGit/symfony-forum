@@ -16,6 +16,25 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class AdminController extends Controller
 {
+    /**
+     * @Route("/", name="damin_home")
+     * @return Response
+     */
+    public function indexAction() {
+        return $this->render('admin/index.html.twig');
+    }
+
+    /**
+     * @Route("/login", name="admin_login")
+     * @return Response
+     */
+    public function admin_loginAction() {
+        return $this->render('default/generic-login.html.twig',
+            [
+                'action' => $this->generateUrl('admin_login_check'),
+                'title' => 'Login des administrateurs'
+            ]);
+    }
 
     /**
      * @Route("/themes", name="admin_themes")
