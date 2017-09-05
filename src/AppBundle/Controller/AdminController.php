@@ -29,10 +29,17 @@ class AdminController extends Controller
      * @return Response
      */
     public function admin_loginAction() {
+        $securityUtils = $this->get('security.authentication_utils');
+
+        $lastUserName = $securityUtils->getLastUsername();
+        $error = $securityUtils->getLastAuthenticationError();
+
         return $this->render('default/generic-login.html.twig',
             [
                 'action' => $this->generateUrl('admin_login_check'),
-                'title' => 'Login des administrateurs'
+                'title' => 'Login des administrateurs',
+                'userName' => $lastUserName,
+                'error' => $error
             ]);
     }
 
