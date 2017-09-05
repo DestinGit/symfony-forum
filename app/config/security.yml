@@ -12,8 +12,17 @@ security:
                   roles: ROLE_ADMIN
                 mopao: {password: $2y$15$GkEkVu3XkpAHwDew6wuLcuLCx.3Nr6WHYQhS90utewtQtYnGkj9PG, roles: ["ROLE_SUPER_ADMIN", "ROLE_ADMIN"]}
 
+        #  on crée un nouveau provider de donnée
+        author_provider:
+            entity: #  la source de donnée de ce provider est une entité
+              class: AppBundle:Author
+              property: email
+
     encoders:
         Symfony\Component\Security\Core\User\User:
+          algorithm: bcrypt
+          cost: 15
+        AppBundle\Entity\Author: #  on associe un encoder à cette Entité
           algorithm: bcrypt
           cost: 15
 
@@ -46,7 +55,18 @@ security:
               target: homepage # C’est la route en cas de succes
 
         main:
-            anonymous: ~
+        #   anonymous: ~
+            anonymous: true
+            pattern: ^/
+            provider: author_provider
+            form_login:
+              login_path: author_login
+              check_path: author_login_check
+              default_target_path: homepage
+            logout:
+              path: author_logout
+              target: homepage
+
             # activate different ways to authenticate
 
             # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate

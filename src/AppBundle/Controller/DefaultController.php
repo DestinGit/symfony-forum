@@ -115,8 +115,24 @@ class DefaultController extends Controller
 
             return $this->redirectToRoute('homepage');
         }
+
         return $this->render('default/author-registration.html.twig', [
             'registrationForm' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/author-login", name="author_login")
+     * @return Response
+     */
+    public function authorLoginAction() {
+        $securityUtils = $this->get('security.authentication_utils');
+
+        return $this->render('default/generic-login.html.twig', [
+            'action' => $this->generateUrl('author_login_check'),
+            'title' => 'Indentification des auteurs',
+            'userName' => $securityUtils->getLastUsername(),
+            'error' => $securityUtils->getLastAuthenticationError()
         ]);
     }
 }

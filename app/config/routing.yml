@@ -7,3 +7,9 @@ admin_login_check: # Nom de la route pour la vérification
 
 admin_logout:
   path: admin/logout
+
+author_login_check:
+  path: /author/login-check
+
+author_logout:
+  path: author/logout
