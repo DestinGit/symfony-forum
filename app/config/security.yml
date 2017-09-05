@@ -10,6 +10,7 @@ security:
                 admin:
                   password: $2y$15$6pckuGeTMRuWclhF.4VVuuCnvrgAXjLRfsJxAG1Y/FAbB0mjaCCqi
                   roles: ROLE_ADMIN
+                mopao: {password: $2y$15$GkEkVu3XkpAHwDew6wuLcuLCx.3Nr6WHYQhS90utewtQtYnGkj9PG, roles: ["ROLE_SUPER_ADMIN", "ROLE_ADMIN"]}
 
     encoders:
         Symfony\Component\Security\Core\User\User:
@@ -46,3 +47,5 @@ security:
 
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
             #form_login: ~
+    access-control:
+      - {path: ^/admin/secure, roles: ROLE_SUPER_ADMIN}

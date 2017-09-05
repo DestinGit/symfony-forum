@@ -2,5 +2,13 @@
 
 {% block body %}
 
+    {% if app.session.flashBag.get('info') is defined %}
+        <ul>
+            {% for message in app.session.flashBag.get('info') %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
 {% endblock %}
 

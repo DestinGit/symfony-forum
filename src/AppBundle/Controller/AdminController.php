@@ -21,6 +21,9 @@ class AdminController extends Controller
      * @return Response
      */
     public function indexAction() {
+        // Création d'un message flash
+        $this->addFlash("info", "Vous êtes bien authentifiés");
+
         return $this->render('admin/index.html.twig');
     }
 
@@ -74,6 +77,14 @@ class AdminController extends Controller
             "themeList" => $themeList,
             'themeForm' => $form->createView()
             ]);
+    }
+
+    /**
+     * @Route("/secure", name="admin_only_mopao")
+     * @return Response
+     */
+    public function onlyMopaoAction() {
+        return $this->render('admin/mopao.html.twig', []);
     }
 
 }
