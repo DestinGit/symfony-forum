@@ -32,7 +32,6 @@ security:
               check_path: admin_login_check # Route pour exécution l'action sur le formulaire
               default_target_path: admin_home # Route cible si action est ok
 
-
         main:
             anonymous: ~
             # activate different ways to authenticate
