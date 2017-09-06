@@ -28,37 +28,10 @@ class DefaultController extends Controller
         $list = $repository->getAllThemes()->getArrayResult();
         $postListByYear = $postRepository->getPostsGroupedByYear();
 
-//        //Gestion des nouveaux posts
-//        $user = $this->getUser();
-//        $roles = isset($user) ? $user->getRoles() : [];
-//        $formView = null;
-//
-//        if (in_array('ROLE_AUTHOR', $roles)) {
-//
-//                // Création du formulaire
-//                $post = new Post();
-//                $post->setCreatedAt(new \DateTime());
-//                $post->setAuthor($user);
-//                $form = $this->createForm(PostType::class, $post);
-//
-//                // On hydrate l'entité "$post" avec les données venant de la requete
-//                $form->handleRequest($request);
-//
-//                // Traitement du formulaire
-//                if ($form->isSubmitted() && $form->isValid()) {
-//                    $em = $this->getDoctrine()->getManager();
-//                    $em->persist($post);
-//                    $em->flush();
-//                    // Redirection
-//                    return $this->redirectToRoute('homepage');
-//                }
-//            $formView = $form->createView();
-//        }
 
         return $this->render('default/index.html.twig', [
             "themeList" => $list,
             'postList' => $postListByYear
-//            'postForm' => $formView
         ]);
     }
 
@@ -88,7 +61,6 @@ class DefaultController extends Controller
         $formView = null;
 
         if (in_array('ROLE_AUTHOR', $roles)) {
-
             // Création du formulaire
             $post = new Post();
             $post->setCreatedAt(new \DateTime());
@@ -120,19 +92,19 @@ class DefaultController extends Controller
         ]);
     }
 
-    /**
-     * @Route("/post-par-annee/{year}", name="post_by_year", requirements={"year":"\d{4}"})
-     * @param $year
-     * @return Response
-     */
-    public function postByYearAction($year) {
-        $postrepository = $this->getDoctrine()->getRepository('AppBundle:Post');
-
-        return $this->render('default/theme.html.twig', [
-            'title' => "liste des posts par année ({$year})",
-            'postList' => $postrepository->getPostsByYear($year)
-        ]);
-    }
+//    /**
+//     * @Route("/post-par-annee/{year}", name="post_by_year", requirements={"year":"\d{4}"})
+//     * @param $year
+//     * @return Response
+//     */
+//    public function postByYearAction($year) {
+//        $postrepository = $this->getDoctrine()->getRepository('AppBundle:Post');
+//
+//        return $this->render('default/theme.html.twig', [
+//            'title' => "liste des posts par année ({$year})",
+//            'postList' => $postrepository->getPostsByYear($year)
+//        ]);
+//    }
 
     /**
      * @Route("/inscription", name="author_registration")
