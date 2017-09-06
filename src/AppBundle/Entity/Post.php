@@ -13,6 +13,12 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table(name="posts")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PostRepository")
+ * @Gedmo\Uploadable(
+ *     allowOverwrite=true,
+ *     filenameGenerator="SHA1",
+ *     maxSize="2000000",
+ *     allowedTypes="image/jpeg,image/png"
+ * )
  */
 class Post
 {
@@ -66,9 +72,31 @@ class Post
      */
     private $slug;
 
-//    public function getAuthorFullName() {
-//        return $this->author->getFirstName()." ". $this->author->getName();
-//    }
+    /**
+     * @var string
+     * @ORM\Column(name="image_file_name", type="string", length=80, nullable=true)
+     * @Gedmo\UploadableFileName()
+     */
+    private $imageFilename;
+
+    /**
+     * @return string
+     */
+    public function getImageFilename()
+    {
+        return $this->imageFilename;
+    }
+
+    /**
+     * @param string $imageFilename
+     * @return Post
+     */
+    public function setImageFilename($imageFilename)
+    {
+        $this->imageFilename = $imageFilename;
+        return $this;
+    }
+
     /**
      * @return string
      */

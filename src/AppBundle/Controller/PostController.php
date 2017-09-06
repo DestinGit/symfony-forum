@@ -66,9 +66,14 @@ class PostController extends Controller
 
             // Traitement du formulaire
             if ($form->isSubmitted() && $form->isValid()) {
+
+                $uploadManager = $this->get('stof_doctrine_extensions.uploadable.manager');
+                $uploadManager->markEntityToUpload($post, $post->getImageFilename());
+
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($post);
                 $em->flush();
+
                 // Redirection
                 return $this->redirectToRoute('homepage');
             }

@@ -46,9 +46,8 @@ class DefaultController extends Controller
             ->getRepository("AppBundle:Theme");
 
         $theme = $repository->find($id);
-
         // Pour les tests
-        $allThemes = $repository->getAllThemes()->getArrayResult();
+//        $allThemes = $repository->getAllThemes()->getArrayResult();
 
         if(! $theme){
             throw new NotFoundHttpException("Thème introuvable");
@@ -64,7 +63,9 @@ class DefaultController extends Controller
             // Création du formulaire
             $post = new Post();
             $post->setCreatedAt(new \DateTime());
-            $post->setAuthor($user);
+            $post->setAuthor($user)
+            ->setTheme($theme);
+
             $form = $this->createForm(PostType::class, $post);
 
             // On hydrate l'entité "$post" avec les données venant de la requete
@@ -72,6 +73,10 @@ class DefaultController extends Controller
 
             // Traitement du formulaire
             if ($form->isSubmitted() && $form->isValid()) {
+
+                $uploadManager = $this->get('stof_doctrine_extensions.uploadable.manager');
+                $uploadManager->markEntityToUpload($post, $post->getImageFilename());
+
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($post);
                 $em->flush();
@@ -87,7 +92,7 @@ class DefaultController extends Controller
         return $this->render('default/theme.html.twig', [
             "theme" => $theme,
             "postList" => $theme->getPosts(),
-            "all" =>$allThemes, // Pour les tests
+//            "all" =>$allThemes, // Pour les tests
             'postForm' => $formView
         ]);
     }

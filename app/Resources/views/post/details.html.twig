@@ -13,7 +13,9 @@
     </ol>
 
     <h1>{{ post.title }}</h1>
-
+    {% if post.imageFilename %}
+        <img src="{{ asset('uploadedFiles/' ~ post.imageFilename) }}" class="img-responsive">
+    {% endif %}
     <p>par {{ post.author.email }} le {{ post.createdAt | date('d/m/Y') }}</p>
 
     <p>{{ post.text | purify }}</p>
