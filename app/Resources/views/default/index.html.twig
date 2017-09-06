@@ -3,6 +3,7 @@
 {% block body %}
 
     <h1>Liste des thèmes</h1>
+
     <table class="table">
         <tbody>
         {% for theme in themeList %}
@@ -12,22 +13,27 @@
                         {{ theme.name }}
                     </a>
                 </td>
-                <td>{{ theme.numberofPosts | length }} posts</td>
+                <td>{{ theme.numberOfPosts }} posts</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    {{ form(postForm) }}
+    {#{% if is_granted ('ROLE_AUTHOR') %}#}
+        {#<h2>Nouveau post</h2>#}
+
+        {#{{ form(postForm) }}#}
+    {#{% endif %}#}
 
 {% endblock %}
 
 {% block aside %}
-    <h3>Les posts par année</h3>
+    <h3> Les posts par années</h3>
     <ul>
         {% for item in postList %}
-            <li>
-                <a href="{{ path('post_by_year', {'year': item.yearPublished}) }}">{{ item.yearPublished }} ({{ item.numberOfPosts }})</a>
+            <a href="{{ path('post_by_year', {'year':item.yearPublished}) }}">
+                <li>{{ item.yearPublished }} ({{ item.numberOfPosts }})
+            </a>
             </li>
         {% endfor %}
     </ul>
@@ -37,3 +43,4 @@
     {{ parent() }}
     <script src="{{ asset('bundles/ivoryckeditor/ckeditor.js') }}"></script>
 {% endblock %}
+

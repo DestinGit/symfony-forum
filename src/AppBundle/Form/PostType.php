@@ -26,8 +26,11 @@ class PostType extends AbstractType
                 'label' => 'Texte',
                 'attr' => ['rows' => 12]
             ])
-            ->add('author', EmailType::class, ['label' => 'Auteur'])
-//            ->add('slug')
+            ->add('author', EntityType::class, [
+                'class' => 'AppBundle\Entity\Author',
+                'choice_label'=>'name',
+                'attr' => ['disabled'=>'disabled']
+            ])
             ->add('createdAt', DateTimeType::class,
                 ['label' => 'Date de publication', 'widget' => 'single_text'])
             ->add('theme', EntityType::class, [

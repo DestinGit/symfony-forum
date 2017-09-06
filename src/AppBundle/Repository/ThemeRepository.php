@@ -17,7 +17,7 @@ class ThemeRepository extends \Doctrine\ORM\EntityRepository
 //        $qb->select(['t.id', 'UCASE(t.name)']);
 //        ou
 //        $qb->select("t.id, UPPER(t.name) as name");
-        $qb->select("t.id, t.name, count(p) as numberofPosts")
+        $qb->select("t.id, t.name, count(p) as numberOfPosts")
             // 1ere argument est la variable qui stocke l'association
             // le 2e argument représente l'alias de la 2e entité. En l'occurence c'est Post
         ->innerJoin("t.posts", "p")

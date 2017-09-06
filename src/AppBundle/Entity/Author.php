@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -25,7 +26,7 @@ class Author implements \Serializable, UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="firstName", type="string", length=50)
+     * @ORM\Column(name="FirstName", type="string", length=50)
      */
     private $firstName;
 
@@ -39,7 +40,7 @@ class Author implements \Serializable, UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=50, unique=true)
+     * @ORM\Column(name="email", type="string", length=80, unique=true)
      */
     private $email;
 
@@ -51,7 +52,18 @@ class Author implements \Serializable, UserInterface
     private $password;
 
     /**
-     * @return string
+     * @var string
+     */
+    private $plainPassword;
+
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Post", mappedBy="author")
+     */
+    private $posts;
+
+    /**
+     * @return mixed
      */
     public function getPlainPassword()
     {
@@ -59,7 +71,7 @@ class Author implements \Serializable, UserInterface
     }
 
     /**
-     * @param string $plainPassword
+     * @param mixed $plainPassword
      * @return Author
      */
     public function setPlainPassword($plainPassword)
@@ -68,10 +80,7 @@ class Author implements \Serializable, UserInterface
         return $this;
     }
 
-    /**
-     * @var string
-     */
-    private $plainPassword;
+
 
     /**
      * Get id
@@ -191,7 +200,7 @@ class Author implements \Serializable, UserInterface
             $this->id,
             $this->email,
             $this->name,
-            $this->firstName
+            $this->firstName,
         ]);
     }
 
@@ -231,7 +240,7 @@ class Author implements \Serializable, UserInterface
      */
     public function getRoles()
     {
-        return ['ROLE_AUTHOR'];
+        return ["ROLE_AUTHOR"];
     }
 
     /**
@@ -266,5 +275,45 @@ class Author implements \Serializable, UserInterface
     {
         // TODO: Implement eraseCredentials() method.
     }
-}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
+    /**
+     * Add post
+     *
+     * @param \AppBundle\Entity\Post $post
+     *
+     * @return Author
+     */
+    public function addPost(\AppBundle\Entity\Post $post)
+    {
+        $this->posts[] = $post;
+
+        return $this;
+    }
+
+    /**
+     * Remove post
+     *
+     * @param \AppBundle\Entity\Post $post
+     */
+    public function removePost(\AppBundle\Entity\Post $post)
+    {
+        $this->posts->removeElement($post);
+    }
+
+    /**
+     * Get posts
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPosts()
+    {
+        return $this->posts;
+    }
+}
