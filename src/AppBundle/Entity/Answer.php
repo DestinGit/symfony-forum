@@ -49,6 +49,15 @@ class Answer
      */
     private $post;
 
+//    /**
+//     * @var StatusAnswer
+//     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\StatusAnswer", inversedBy="answerState")
+//     */
+    /**
+     * @var int
+     * @ORM\Column(name="status", type="smallint", nullable=true)
+     */
+    private $status;
 
     /**
      * Get id
@@ -154,5 +163,30 @@ class Answer
     public function getPost()
     {
         return $this->post;
+    }
+
+
+    /**
+     * Set status
+     *
+     * @param integer $status
+     *
+     * @return Answer
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return integer
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 }

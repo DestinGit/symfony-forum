@@ -1,6 +1,14 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
+    {% if isConnected %}
+        <p>AFFICHAGE DU FORMULAIRE</p>
+    {% endif %}
+
+    {{ dump(post) }}
+    {% if app.user.id is defined %}
+        {{ dump(app.user.id) }}
+    {% endif %}
     <ol class="breadcrumb">
         <li>
             <a href="{{ path('homepage') }}">Liste des thèmes</a>
@@ -26,14 +34,45 @@
     <div class="col-md-6 col-md-offset-3">
         <h3 class="text-center">Nouvelle réponse</h3>
     </div>
-
     {% for answer in post.answers %}
-        <div class="col-md-8 col-md-offset-2">
-            <p>le {{ answer.createdAt | date('d/m/Y') }} par {{ answer.author }}</p>
-            <p>{{ answer.text }}</p>
-            <hr>
-        </div>
+
+        {% if isMe %}
+            {% if status > 2 %}
+                <div class="col-md-8 col-md-offset-2">
+                    <p>le {{ answer.createdAt | date('d/m/Y') }} par {{ answer.author }}</p>
+                    <p>{{ answer.text }}</p>
+                    <p>{{ dump(answer.status) }}</p>
+
+                    {{ include('_buttons.html.twig') }}
+                    <hr>
+                </div>
+            {% elseif answer.status == status %}
+                <div class="col-md-8 col-md-offset-2">
+                    <p>le {{ answer.createdAt | date('d/m/Y') }} par {{ answer.author }}</p>
+                    <p>{{ answer.text }}</p>
+                    <p>{{ dump(answer.status) }}</p>
+
+                    {{ include('_buttons.html.twig') }}
+                    <hr>
+                </div>
+            {% endif %}
+
+        {% elseif answer.status == status %}
+            <div class="col-md-8 col-md-offset-2">
+                <p>le {{ answer.createdAt | date('d/m/Y') }} par {{ answer.author }}</p>
+                <p>{{ answer.text }}</p>
+                <p>{{ dump(answer.status) }}</p>
+                <hr>
+            </div>
+        {% endif %}
+
 
     {% endfor %}
 
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/js/app.js') }}"></script>
 {% endblock %}

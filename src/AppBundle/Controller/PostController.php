@@ -7,6 +7,7 @@ use AppBundle\Entity\Post;
 use AppBundle\Form\PostType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -30,13 +31,32 @@ class PostController extends Controller
 
         $post = $repository->find($id);
 
+        $user = $this->getUser();
+        $roles = isset($user) ? $user->getRoles() : [];
+
+        $isMe = false;
+        $isConnected = false;
+        $status = 1;
+        // si je suis connecté
+        if (in_array('ROLE_AUTHOR', $roles)) {
+            if($post->getAuthor()->getId() == $user->getId()) {
+                $isMe = true;
+                $status = 3;
+            }
+            $isConnected = true;
+            // j'affiche le formulaire de commentaire
+        }
+
         if(! $post){
             throw new NotFoundHttpException("post introuvable");
         }
 
         return $this->render("post/details.html.twig", [
             "post" => $post,
-            "answerList" => $post->getAnswers()
+            "answerList" => $post->getAnswers(),
+            'status' => $status,
+            'isMe' => $isMe,
+            'isConnected' => $isConnected
         ]);
     }
 

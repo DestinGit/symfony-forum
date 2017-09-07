@@ -38,6 +38,8 @@ class AnswerFixture extends AbstractFixture implements OrderedFixtureInterface
             for($k=1; $k <= $nbAnswers; $k++){
                 $post = $this->getReference("post_{$k}");
 
+//                $answerStatus = $this->getReference('answer_status_' . mt_rand(0, 2));
+
                 $entity = new Answer();
                 $entity->setText($faker->text(mt_rand(30,200)))
                         ->setAuthor($faker->email)
@@ -46,7 +48,9 @@ class AnswerFixture extends AbstractFixture implements OrderedFixtureInterface
                             "now"
                             )
                         )
-                        ->setPost($post);
+                        ->setPost($post)
+                ->setStatus(mt_rand(0, 2));
+//                ->setStatus($answerStatus);
 
                 $manager->persist($entity);
             }
