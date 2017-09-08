@@ -5,10 +5,10 @@
         <p>AFFICHAGE DU FORMULAIRE</p>
     {% endif %}
 
-    {{ dump(post) }}
-    {% if app.user.id is defined %}
-        {{ dump(app.user.id) }}
-    {% endif %}
+    {#{{ dump(post) }}#}
+    {#{% if app.user.id is defined %}#}
+        {#{{ dump(app.user.id) }}#}
+    {#{% endif %}#}
     <ol class="breadcrumb">
         <li>
             <a href="{{ path('homepage') }}">Liste des thèmes</a>

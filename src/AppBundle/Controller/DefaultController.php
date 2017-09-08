@@ -155,4 +155,15 @@ class DefaultController extends Controller
             'error' => $securityUtils->getLastAuthenticationError()
         ]);
     }
+
+    /**
+     * @Route("test-service")
+     * @return Response
+     */
+    public function testServiceAction() {
+        $helloService = $this->get('service.hello');
+        $message = $helloService->sayHello();
+
+        return $this->render('default/test-service.html.twig', ['message'=>$message]);
+    }
 }

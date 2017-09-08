@@ -17,9 +17,9 @@ class AnswerController extends Controller
      */
     public function ajaxUserAction(Request $request, $idAnswer, $status) {
         $response = [];
+        $answerRepository = $this->getDoctrine()->getRepository('AppBundle:Answer');
 
         if($request->isXmlHttpRequest()) {
-            $answerRepository = $this->getDoctrine()->getRepository('AppBundle:Answer');
             $answer = $answerRepository->find($idAnswer);
             $answer->setStatus($status);
 
