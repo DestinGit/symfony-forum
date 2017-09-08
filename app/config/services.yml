@@ -46,3 +46,8 @@ services:
         - "@post.file_datatransformer"
       tags:
         - {name: form.type}
+
+    twig.filter.elapsed:
+      class: AppBundle\Twig\ElapsedTimeFilter
+      tags:
+        - {name: "twig.extension"}
