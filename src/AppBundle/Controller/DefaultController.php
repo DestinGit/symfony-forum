@@ -162,7 +162,11 @@ class DefaultController extends Controller
      */
     public function testServiceAction() {
         $helloService = $this->get('service.hello');
-        $message = $helloService->sayHello();
+        $helloService->setName('Bob');
+
+        $newHelloService = $this->get('service.hello');
+
+        $message = $helloService->sayHello() . ' ' . $newHelloService->sayHello();
 
         return $this->render('default/test-service.html.twig', ['message'=>$message]);
     }
