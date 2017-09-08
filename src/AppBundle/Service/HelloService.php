@@ -11,12 +11,19 @@ class HelloService
     private $name;
 
     /**
+     * @var HelloRenderer
+     */
+    private $renderer;
+
+    /**
      * HelloService constructor.
      * @param string $name
+     * @param HelloRenderer $renderer
      */
-    public function __construct($name)
+    public function __construct($name, HelloRenderer $renderer)
     {
         $this->name = $name;
+        $this->renderer = $renderer;
     }
 
     /**
@@ -39,6 +46,7 @@ class HelloService
 
 
     public function sayHello() {
-        return 'hello ' . $this->name;
+        return $this->renderer->render('hello ' . $this->name);
     }
+
 }

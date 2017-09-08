@@ -38,7 +38,7 @@
 
         {% if isMe %}
             {% if status > 2 %}
-                <div class="col-md-8 col-md-offset-2">
+                <div class="col-md-8 col-md-offset-2" data-index="{{ answer.id }}">
                     <p>le {{ answer.createdAt | date('d/m/Y') }} par {{ answer.author }}</p>
                     <p>{{ answer.text }}</p>
                     <p>{{ dump(answer.status) }}</p>
@@ -47,7 +47,7 @@
                     <hr>
                 </div>
             {% elseif answer.status == status %}
-                <div class="col-md-8 col-md-offset-2">
+                <div class="col-md-8 col-md-offset-2" data-index="{{ answer.id }}">
                     <p>le {{ answer.createdAt | date('d/m/Y') }} par {{ answer.author }}</p>
                     <p>{{ answer.text }}</p>
                     <p>{{ dump(answer.status) }}</p>

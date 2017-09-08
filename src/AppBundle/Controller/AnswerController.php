@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 class AnswerController extends Controller
 {
     /**
-     * @Route("/api/{idAnswer}/{status}",
+     * @Route("/api/{idAnswer}/{status}", name="answer_request_ajax",
      *     requirements={"idAnswer"="\d+", "status"="\d+"})
      * @param Request $request
      * @return array|JsonResponse
