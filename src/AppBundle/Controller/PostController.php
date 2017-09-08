@@ -125,6 +125,9 @@ class PostController extends Controller
             throw new AccessDeniedHttpException('Vous n\'avez pas le droit pour modifier ce post');
         }
 
+        dump($post->getImageFilename());
+        $fileName = $post->getImageFilename();
+
         // Création du formulaire
         $form = $this->createForm(PostType::class, $post);
 
@@ -132,13 +135,26 @@ class PostController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            if($post->getImageFilename() == null) {
+                $post->setImageFilename($fileName);
+            }
             $em->persist($post);
             $em->flush();
 
-            return $this->redirectToRoute('theme_details', ['id' => $post->getTheme()->getId()]);
+            // return $this->redirectToRoute('theme_details', ['id' => $post->getTheme()->getId()]);
         }
 
         return $this->render('post/edit.html.twig', ['postForm' => $form->createView()]);
+
+/*
+        $formHandler = $this->get('post.form_handler')
+            ->setPost($post);
+//        if($formHandler->process()) {
+//
+//        }
+
+        return $this->render('post/edit.html.twig', ['postForm' => $formHandler->getFormView()]);
+*/
     }
 
 }
