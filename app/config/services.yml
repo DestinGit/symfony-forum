@@ -16,3 +16,21 @@ services:
         - "world"
         - "@app.service.hello_renderer"
       shared: false
+
+    post.manager:
+      class: AppBundle\Entity\Manager\PostManager
+      arguments:
+        - "@doctrine.orm.entity_manager"
+
+    post.entity:
+        class: AppBundle\Entity\Post
+
+    post.form_handler:
+      class: AppBundle\Form\Handler\PostFormHandler
+      arguments:
+        - "@post.entity" # ou - AppBundle\Entity\Post
+        - "AppBundle\\Form\\PostType"
+        - "@form.factory"
+        - "@post.manager"
+        - "@request_stack"
+        - "@stof_doctrine_extensions.uploadable.manager"

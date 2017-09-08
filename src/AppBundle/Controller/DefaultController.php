@@ -66,24 +66,20 @@ class DefaultController extends Controller
             $post->setAuthor($user)
             ->setTheme($theme);
 
-            $form = $this->createForm(PostType::class, $post);
-
-            // On hydrate l'entité "$post" avec les données venant de la requete
-            $form->handleRequest($request);
+            $formHandler = $this->get('post.form_handler')
+                    ->setPost($post);
 
             // Traitement du formulaire
-            if ($form->isSubmitted() && $form->isValid()) {
+            if ($formHandler->process()) {
+//                $uploadManager = $this->get('stof_doctrine_extensions.uploadable.manager');
+//                $uploadManager->markEntityToUpload($post, $post->getImageFilename());
 
-                $uploadManager = $this->get('stof_doctrine_extensions.uploadable.manager');
-                $uploadManager->markEntityToUpload($post, $post->getImageFilename());
+//                $this->get('post.manager')->setPost($post)->save();
 
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($post);
-                $em->flush();
                 // Redirection
                 return $this->redirectToRoute('homepage');
             }
-            $formView = $form->createView();
+            $formView = $formHandler->getFormView();
         }
 
 
