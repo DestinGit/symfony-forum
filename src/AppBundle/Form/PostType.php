@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Form\Transformer\UploadedFileDataTransformer;
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use function Sodium\add;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -18,6 +19,21 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class PostType extends AbstractType
 {
     /**
+     * @var UploadedFileDataTransformer
+     */
+    private $fileTransformer;
+
+    /**
+     * PostType constructor.
+     * @param UploadedFileDataTransformer $fileTransformer
+     */
+    public function __construct(UploadedFileDataTransformer $fileTransformer)
+    {
+        $this->fileTransformer = $fileTransformer;
+    }
+
+
+    /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -27,23 +43,12 @@ class PostType extends AbstractType
                 'label' => 'Texte',
                 'attr' => ['rows' => 12]
             ])
-            /*->add('author', EntityType::class, [
-                'class' => 'AppBundle\Entity\Author',
-                'choice_label'=>'name',
-                'attr' => ['disabled'=>'disabled']
-            ])*/
             ->add('createdAt', DateTimeType::class,
                 ['label' => 'Date de publication', 'widget' => 'single_text'])
-//            ->add('theme', EntityType::class, [
-//                'class' => 'AppBundle\Entity\Theme',
-//                'placeholder' => 'Choisissez un thème',
-//                'choice_label' => 'name',
-//                'attr' => ['disabled'=>'disabled']
-////                'expanded' => true,
-////                'multiple' => true
-//            ])
             ->add('imageFilename', FileType::class, ['label' => 'Image', 'required' => false])
         ->add('submit', SubmitType::class, ['label' => 'Valider']);
+
+            $builder->addViewTransformer($this->fileTransformer);
     }
     
     /**

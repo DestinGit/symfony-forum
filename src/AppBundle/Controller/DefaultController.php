@@ -77,7 +77,7 @@ class DefaultController extends Controller
 //                $this->get('post.manager')->setPost($post)->save();
 
                 // Redirection
-                return $this->redirectToRoute('homepage');
+                return $this->redirectToRoute('theme_details', ['id'=>$id]);
             }
             $formView = $formHandler->getFormView();
         }

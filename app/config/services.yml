@@ -34,3 +34,15 @@ services:
         - "@post.manager"
         - "@request_stack"
         - "@stof_doctrine_extensions.uploadable.manager"
+
+    post.file_datatransformer:
+      class: AppBundle\Form\Transformer\UploadedFileDataTransformer
+      arguments:
+        - "%stof_doctrine_extensions.default_file_path%"
+
+    post.form_type:
+      class: AppBundle\Form\PostType
+      arguments:
+        - "@post.file_datatransformer"
+      tags:
+        - {name: form.type}

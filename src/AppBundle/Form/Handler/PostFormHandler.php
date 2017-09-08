@@ -1,20 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: formation
- * Date: 08/09/2017
- * Time: 11:21
- */
 
 namespace AppBundle\Form\Handler;
 
 
 use AppBundle\Entity\Manager\PostManager;
 use AppBundle\Entity\Post;
-use Gedmo\Uploadable\Uploadable;
 use Stof\DoctrineExtensionsBundle\Uploadable\UploadableManager;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class PostFormHandler
@@ -90,7 +84,7 @@ class PostFormHandler
 
             $success = true;
             // Gestion de l'upload
-            if ($this->post->getImageFilename() instanceof Uploadable) {
+            if ($this->post->getImageFilename() instanceof UploadedFile) {
                 $this->uploadableManager->markEntityToUpload(
                     $this->post,
                     $this->post->getImageFilename()
