@@ -85,9 +85,11 @@ class PostFormHandler
 
         $success = false;
 
+        // Test si le formulaire est valid et soumis
         if ($this->form->isSubmitted() and $this->form->isValid()) {
-            $success = true;
 
+            $success = true;
+            // Gestion de l'upload
             if ($this->post->getImageFilename() instanceof Uploadable) {
                 $this->uploadableManager->markEntityToUpload(
                     $this->post,
@@ -95,6 +97,7 @@ class PostFormHandler
                 );
             }
 
+            // Persistance des données
             $this->manager->setPost($this->post)->save();
         }
 
